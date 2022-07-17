@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzler());
 
@@ -11,7 +13,7 @@ class Quizzler extends StatelessWidget {
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
           ),
         ),
@@ -27,15 +29,6 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
-  int quizNumber = 0;
-
-  List<Question> questionBank = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: true),
-    Question(q: 'A slug\'s blood is green.', a: false)
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +39,12 @@ class _QuizPageState extends State<QuizPage> {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionBank[quizNumber].questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 25.0,
                   color: Colors.white,
                 ),
@@ -64,11 +57,11 @@ class _QuizPageState extends State<QuizPage> {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: FlatButton(
               textColor: Colors.white,
               color: Colors.green,
-              child: Text(
+              child: const Text(
                 'True',
                 style: TextStyle(
                   color: Colors.white,
@@ -78,34 +71,34 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {});
                 //The user picked true.
-                quizNumber++;
-                bool correctAnswer = questionBank[quizNumber].questionAnswer;
-                if (correctAnswer == false) {
+                bool userAnswer = true;
+                bool correctAnswer = quizBrain.getQuestionAnswer();
+                if (userAnswer == correctAnswer) {
                   scoreKeeper.add(
-                    Icon(
+                    const Icon(
                       Icons.check,
                       color: Colors.green,
                     ),
                   );
                 } else {
                   scoreKeeper.add(
-                    Icon(
+                    const Icon(
                       Icons.close,
                       color: Colors.red,
                     ),
                   );
                 }
-                ;
+                quizBrain.nextQuiz();
               },
             ),
           ),
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: FlatButton(
               color: Colors.red,
-              child: Text(
+              child: const Text(
                 'False',
                 style: TextStyle(
                   fontSize: 20.0,
@@ -114,13 +107,25 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {});
-                scoreKeeper.add(
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ),
-                );
-                quizNumber++;
+                bool userAnswer = false;
+                bool correctAnswer = quizBrain.getQuestionAnswer();
+                if (userAnswer == correctAnswer) {
+                  scoreKeeper.add(
+                    const Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                } else {
+                  scoreKeeper.add(
+                    const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                }
+                quizBrain.nextQuiz();
+
                 //The user picked false.
               },
             ),
