@@ -1,6 +1,8 @@
 package com.example.kotlinbasic
 
-interface Drivable{
+// Kotlin 에서는 다중상속이 되지 않는다 다중상속을 필요로 하는 상황에서 interface를 구현하여
+// 다중상속과 유사한 효과를 낼 수 있다.
+interface Driveable {
     val maxSpeed: Double
     fun drive(): String
     fun brake(){
@@ -8,43 +10,59 @@ interface Drivable{
     }
 }
 
-
-// Super Class, Parent Class, Base Class of ElectricCar
-open class Car(val name: String, val brand: String){
+// Class Car which extends the interface
+open class Car(override val maxSpeed: Double,
+               open val brandName: String
+) : Driveable {
+    // open so it can be overriden by inhereting classes
     open var range: Double = 0.0
-    fun extendRange(amount: Double){
-        if(amount > 0){
+
+    open fun extendRange(amount: Double) {
+        if (amount > 0) {
             range += amount
         }
+
     }
-    open fun drive(distance: Double){
-        println("Drove for $distance KM")
+
+    override fun drive(): String {
+        println("Drove for $range KM")
+        return range.toString()
+    }
+
+    // overridden functions are implicitly open:
+    override fun brake() {
+        println("The car is breaking")
     }
 }
-// Sub Class, Child Class, Derived Class of Car
-// Parent Class의 매개변수가 "모두" 입력되어야 함, 추가적인 매개변수 또한 입련 가능
-class ElectricCar(name: String,brand: String, batteryLife: Double)
-    : Car(name, brand){
+// In case there is no primary Constructor
+class ElectricCar(override val maxSpeed: Double,
+                  override val brandName: String,
+                  batteryLife: Double) : Car(maxSpeed, brandName) {
 
-    var chargerType = "Type1"
-
+    // in KM
     override var range = batteryLife/6
 
-    override fun drive(distance: Double) {
+    override fun drive() = "Overriding the drive of my Car"
+
+    fun drive(distance: Double){
         println("Drove for $distance KM on electricity")
     }
-    fun drive(){
-        println("Drove for $range KM on Electricity")
+    override fun brake(){
+        println("The electirc car is breaking")
     }
 }
 
-fun main(){
-    var audiA3 = Car("A3", "Audi")
-    var teslaS = ElectricCar("S-Model", "Tesla", 85.0)
 
-    teslaS.extendRange(200.0)
-    audiA3.drive(200.0)
+
+fun main(args: Array<String>){
+    var audiA3 = Car(200.0, "Audi")
+    var teslaS = ElectricCar(250.0, "Tesla", 85.0)
+
+    // Polymorphism is the ability to treat objects
+    // with similar traits in a common way
+    audiA3.drive()
+    // Only works because ElectricCar is a Subclass of Car
+    // Or alternatively works if Car was an Interface and ElectricCar would inherit from it
+    teslaS.drive()
     teslaS.drive(200.0)
-    println(teslaS.range)
-
 }
