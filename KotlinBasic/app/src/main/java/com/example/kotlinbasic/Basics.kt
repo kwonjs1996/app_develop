@@ -1,40 +1,47 @@
 package com.example.kotlinbasic
 
+data class User(val id: Long, var name: String)
+// data class 는 데이터 보관 목적으로 만든 클래스, toString(), hashCode(), equals(), copy()
+// 메소드를 자동으로 만들어줌, -> 보일러플레이트 코드를 만들지 않아도 됌
+// 데이터클래스의 생성자(primary constructor)는 1개 이상의 프로퍼티를 선언해야함
+// 데이터클래스의 프로퍼티는 val or var로 선언해야함
+// 데이터 클래스에 abstract, open, sealed, inner 를 붙일 수 없음.
+// 클래스에서 toString(), hashCode(), equals(), copy()를 override하면, 그 함수는 직접 구현된 코드를 사용
+// 데이터 클래스는 상속 받을 수 없음.
+
 fun main(){
-   var myCar = Car()
-   println("brand is : ${myCar.myBrand}")
-   myCar.maxSpeed = 200
-   println("Maxspeed is ${myCar.maxSpeed}")
-   println(myCar.owner)
-//   myCar.myModel = "M3" private set 선언되어 있어서 바꿀 수 없음
-   println("My model is ${myCar.myModel}") // private get 선언은 되어있지 않기에 값을 가져오는건
-                                           // 가능하다.
-}
+   val user1 = User(1, "Denis")
 
-class Car(){
-   lateinit var owner : String
+//   val name = user1.name
+//   println(name)
 
-   val myBrand: String = "BMW"
-   get() {
-         return field.toLowerCase()       // Custom getter , custom field
-   }
+   user1.name = "Michael"
 
-   var maxSpeed: Int = 250
-      get() = field // custom field 가 아님 기본
-      set(value){
-         // set value, custom setter 라고 볼 수 있다? 정확한 명칭은 안나옴
-         field = if(value > 0) value else throw IllegalArgumentException("Maxspeed can not nagative")
-      }
+   val user2 = User(1, "Michael")
 
-   var myModel : String = "M5"
-      private set // 한가지 클래스 현재는 Car 클래스 내에서만 값을 바꿀 수 있음
+//   println(user1.equals(user2)) ==
+   println(user1 == user2)
 
-   init {
-      this.owner = "Frank"
-      myModel = "M3" // Car 클래스 내부에서 private set 선언이 되어있기때문에 변수값을 바꿀 수 있다.
-   }
-      // 변수를 만들 시 Kotlin에서 자동으로 생성해주는 코드
-//      get() = field
-//      set(value){
-//         field = value
+   println("User Details: $user1")
+
+   val updatedUser = user1.copy(name = "Denis Panjuta")
+   println(user1)
+   println(updatedUser)
+
+
+
+
+
+   //Destructuring Declarations
+   val(id, name) = updatedUser
+   //작동원리
+   println(updatedUser.component1()) // prints 1
+   println(updatedUser.component2()) // prints Denis panjuta
+   // 주의할 점
+   // 생성자에 정의된 프로퍼티의 순서대로 변수에 대입한다.
+//   val(name2, id2) = user2
+//   println(name2)
+   // 결과값은 1 즉 id의 값이 출력된다.
+
+
 }
