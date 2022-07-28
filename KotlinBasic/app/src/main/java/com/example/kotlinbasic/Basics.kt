@@ -1,51 +1,40 @@
 package com.example.kotlinbasic
 
 fun main(){
-    print("Hello World")
-    var age = 3
-    if(age >= 21)
-
-    var season = 3
-    when(season){
-        1 -> println("Spring")
-        2 -> println("Summer")
-        3 -> {
-            println("Fall")
-            println("Autumn")
-        }
-        4 -> println("Winter")
-        else -> println("Invalid Season")
-    }
-
-    var month = 3
-    when(month){
-        in 3..5 -> println("Spring")
-        in 6..8 -> println("Summer")
-        in 9..11 -> println("Fall")
-        12, 1, 2 -> println("Winter")
-        else -> println("Invalid Season")
-    }
-
-    var y = 1
-    while (y <= 10){
-        print("$y")
-        y++
-    }
-    print("\nWhile is done")
-
-    var x = 100
-    while (0 <= x) {
-        print("$x")
-        x-= 2
-    }
-    print("\nWhile is done")
-    for (i in 0 until 10000){
-        print(i)
-        if(i == 9001){
-            println("IT'S OVER 9000!")
-        }
-
-    }
-
+   var myCar = Car()
+   println("brand is : ${myCar.myBrand}")
+   myCar.maxSpeed = 200
+   println("Maxspeed is ${myCar.maxSpeed}")
+   println(myCar.owner)
+//   myCar.myModel = "M3" private set 선언되어 있어서 바꿀 수 없음
+   println("My model is ${myCar.myModel}") // private get 선언은 되어있지 않기에 값을 가져오는건
+                                           // 가능하다.
 }
 
+class Car(){
+   lateinit var owner : String
+
+   val myBrand: String = "BMW"
+   get() {
+         return field.toLowerCase()       // Custom getter , custom field
+   }
+
+   var maxSpeed: Int = 250
+      get() = field // custom field 가 아님 기본
+      set(value){
+         // set value, custom setter 라고 볼 수 있다? 정확한 명칭은 안나옴
+         field = if(value > 0) value else throw IllegalArgumentException("Maxspeed can not nagative")
+      }
+
+   var myModel : String = "M5"
+      private set // 한가지 클래스 현재는 Car 클래스 내에서만 값을 바꿀 수 있음
+
+   init {
+      this.owner = "Frank"
+      myModel = "M3" // Car 클래스 내부에서 private set 선언이 되어있기때문에 변수값을 바꿀 수 있다.
+   }
+      // 변수를 만들 시 Kotlin에서 자동으로 생성해주는 코드
+//      get() = field
+//      set(value){
+//         field = value
+}
