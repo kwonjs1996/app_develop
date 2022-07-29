@@ -1,68 +1,70 @@
 package com.example.kotlinbasic
 
-// Kotlin 에서는 다중상속이 되지 않는다 다중상속을 필요로 하는 상황에서 interface를 구현하여
-// 다중상속과 유사한 효과를 낼 수 있다.
-interface Driveable {
-    val maxSpeed: Double
-    fun drive(): String
-    fun brake(){
-        println("The drivable is braking")
+// abstract class
+// 그 자체로 인스턴스화 될 수 없는 클래스
+// 여러 클래스의 공통적인 부분을 모아놓은 클래스
+// 내부 변수나 함수도 abstract 로 만들 수 있다.
+// abstract 로 만들어진 값들은 미완성 된 값들이므로 interface 처럼 무조건 abstract class 를
+// 구현하는 곳(상속받은 class)에서 구현해야한다.
+// abstract 로 구현 할 때 override 하여 선언한다.
+// abstract class 내부에 abstract 로 선언되지 않은 fun, var, val 은 구현하는 곳에서
+// 바로 사용이 가능하다.
+abstract class Mammal(val name: String, val origin: String,
+                      val weight: Double) {   // Concrete (Non Abstract) Properties
+
+    // Abstract Property (Must be overridden by Subclasses)
+    abstract var maxSpeed: Double
+
+    // Abstract Methods (Must be implemented by Subclasses)
+    abstract fun run()
+    abstract fun breath()
+
+    // Concrete (Non Abstract) Method
+    fun displayDetails() {
+        println("Name: $name, Origin: $origin, Weight: $weight, " +
+                "Max Speed: $maxSpeed")
     }
 }
 
-// Class Car which extends the interface
-open class Car(override val maxSpeed: Double,
-               open val brandName: String
-) : Driveable {
-    // open so it can be overriden by inhereting classes
-    open var range: Double = 0.0
+class Human(name: String, origin: String, weight: Double,
+            override var maxSpeed: Double): Mammal(name, origin, weight) {
 
-    open fun extendRange(amount: Double) {
-        if (amount > 0) {
-            range += amount
-        }
-
+    override fun run() {
+        // Code to run
+        println("Runs on two legs")
     }
 
-    override fun drive(): String {
-        println("Drove for $range KM")
-        return range.toString()
-    }
-
-    // overridden functions are implicitly open:
-    override fun brake() {
-        println("The car is breaking")
-    }
-}
-// In case there is no primary Constructor
-class ElectricCar(override val maxSpeed: Double,
-                  override val brandName: String,
-                  batteryLife: Double) : Car(maxSpeed, brandName) {
-
-    // in KM
-    override var range = batteryLife/6
-
-    override fun drive() = "Overriding the drive of my Car"
-
-    fun drive(distance: Double){
-        println("Drove for $distance KM on electricity")
-    }
-    override fun brake(){
-        println("The electirc car is breaking")
+    override fun breath() {
+        // Code to breath
+        println("Breath through mouth or nose")
     }
 }
 
+class Elephant(name: String, origin: String, weight: Double,
+               override var maxSpeed: Double): Mammal(name, origin, weight) {
 
+    override fun run() {
+        // Code to run
+        println("Runs on four legs")
+    }
 
-fun main(args: Array<String>){
-    var audiA3 = Car(200.0, "Audi")
-    var teslaS = ElectricCar(250.0, "Tesla", 85.0)
+    override fun breath() {
+        // Code to breath
+        println("Breath through the trunk")
+    }
+}
 
-    // Polymorphism is the ability to treat objects
-    // with similar traits in a common way
-    audiA3.drive()
-    // Only works because ElectricCar is a Subclass of Car
-    // Or alternatively works if Car was an Interface and ElectricCar would inherit from it
-    teslaS.drive()
-    teslaS.drive(200.0)
+fun main() {
+    val human = Human("Denis", "Russia",
+        70.0, 28.0)
+    val elephant = Elephant("Rosy", "India",
+        5400.0, 25.0)
+
+    human.run()
+    elephant.run()
+
+    human.breath()
+    elephant.breath()
+    human.displayDetails()
+
 }
