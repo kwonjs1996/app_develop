@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
                 // intent 인스턴스 생성 this(현재 페이지 == MainActivity)에서 QuizQuestionActivity 로
                 // 보내준다.
                val intent = Intent(this, QuizQuestionsActivity::class.java)
+                intent.putExtra(Constants.USER_NAME, etName.text.toString())
+                // intent 로 etName 을 받아서 Constants.USER_NAME 이라는 이름으로
+                // QuizQuestionsActivity 로 보내준다.
                 startActivity(intent)
                 finish()
             }

@@ -3,6 +3,10 @@ package com.example.myquizapp
 // Question DataClass 에 맞는 형식으로 데이터 만들기
 
 object Constants {
+    // 값을 옮기는데 사용하는 목적으로 변수를 생성한다. 안전하게 운반하는 방법? 같은 느낌
+    const val USER_NAME : String ="user_name"
+    const val TOTAL_QUESTIONS : String = "total_questions"
+    const val CORRECT_ANSWERS : String = "correct_answers"
 
     fun getQuestions(): ArrayList<Question> {
         val questionList = ArrayList<Question>()

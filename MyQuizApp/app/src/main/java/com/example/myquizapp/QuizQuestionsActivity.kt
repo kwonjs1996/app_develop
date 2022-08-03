@@ -1,6 +1,7 @@
 package com.example.myquizapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +13,12 @@ import androidx.core.content.ContextCompat
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
+    private var mUserName : String? = null
+
     private var mCurrentPosition: Int = 1
     private var mQuestionList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
+    private var mCorrectAnswers : Int = 0
 
     private var progressBar: ProgressBar? = null
     private var tvProgress: TextView? = null
@@ -42,6 +46,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tvOptionThree = findViewById(R.id.tvOptionThree)
         tvOptionFour = findViewById(R.id.tvOptionFour)
         mQuestionList = Constants.getQuestions()
+
+        mUserName = intent.getStringExtra(Constants.USER_NAME)
 
         tvOptionOne?.setOnClickListener(this)
         tvOptionTwo?.setOnClickListener(this)
@@ -143,19 +149,29 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                             setQuestion()
                         }
                         else -> {
-                            Toast.makeText(this, "This is the last question!", Toast.LENGTH_SHORT)
-                                .show()
+                            // intent 를 생성하여 ResultActivity 로 값들을 보내준다. startActivity 를 사용하여 활성화시키고,
+                            // finish() 를 사용하여 뒤로가기 버튼이 눌려도 이전 화면으로 갈 수 없게 한다.
+                            // 아마 이전 Activity 를 종료하는 방법인 듯 하다. 계속해서 쌓이는걸 방지하는 느낌..?
+                            val intent = Intent(this,ResultActivity::class.java)
+                            intent.putExtra(Constants.USER_NAME, mUserName)
+                            intent.putExtra(Constants.CORRECT_ANSWERS, mCorrectAnswers)
+                            intent.putExtra(Constants.TOTAL_QUESTIONS, mQuestionList?.size)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 } else {
                     val question = mQuestionList?.get(mCurrentPosition - 1)
                     if (question!!.correctAnswer != mSelectedOptionPosition) {
                         answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
+                    }else {
+                        mCorrectAnswers++
                     }
                     answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
                 }
 
                 if (mCurrentPosition == mQuestionList!!.size) {
+
                     btnSubmit?.text = "FINISH"
                 } else {
                     btnSubmit?.text = "GO TO NEXT QUESTION"
