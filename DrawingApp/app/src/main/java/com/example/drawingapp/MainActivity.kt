@@ -3,8 +3,10 @@ package com.example.drawingapp
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         // LinearLayout 의 index 를 활용해서 각 요소들마다 onClickListener 를 사용하지 않고도 할 수 있게 한다.
         mImageButtonCurrentPaint = linearLayoutPaintColors[1] as ImageButton
-        // 각 요소가 선택되었을 때 선택되었음을 알게 해준다.
+        // 선택된 요소에 pallet_pressed 를 적용시킨다..
         mImageButtonCurrentPaint!!.setImageDrawable(
             ContextCompat.getDrawable(this, R.drawable.pallet_pressed)
         )
@@ -57,5 +59,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         brushDialog.show()
+    }
+
+    fun paintClicked(view: View){
+        if (view !== mImageButtonCurrentPaint){
+            val imageButton = view as ImageButton
+            val colorTag = imageButton.tag.toString()
+            drawingView?.setColor(colorTag)
+
+            //현재 선택된 버튼을 활성화시킨다
+            imageButton.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.pallet_pressed)
+            )
+
+            // 전에 선택되어 있는 버튼을 초기화 시킨다.
+            mImageButtonCurrentPaint?.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.pallet_normal)
+            )
+
+            // 다른 버튼을 선택 할 때 이미 선택되어 있는 상태를 막기 위해서.
+            mImageButtonCurrentPaint = view
+
+        }
     }
 }
