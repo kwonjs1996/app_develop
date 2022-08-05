@@ -4,10 +4,15 @@ import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
+    private var mImageButtonCurrentPaint: ImageButton? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,6 +20,15 @@ class MainActivity : AppCompatActivity() {
 
         drawingView = findViewById(R.id.drawing_view)
         drawingView?.setSizeForBrush(20.toFloat())
+
+        val linearLayoutPaintColors = findViewById<LinearLayout>(R.id.ll_paint_colors)
+
+        // LinearLayout 의 index 를 활용해서 각 요소들마다 onClickListener 를 사용하지 않고도 할 수 있게 한다.
+        mImageButtonCurrentPaint = linearLayoutPaintColors[1] as ImageButton
+        // 각 요소가 선택되었을 때 선택되었음을 알게 해준다.
+        mImageButtonCurrentPaint!!.setImageDrawable(
+            ContextCompat.getDrawable(this, R.drawable.pallet_pressed)
+        )
 
         val ib_brush : ImageButton = findViewById(R.id.ib_brush)
         ib_brush.setOnClickListener {
