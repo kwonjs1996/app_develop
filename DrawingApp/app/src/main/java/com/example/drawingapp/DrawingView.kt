@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionHelper
 
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 // 변수 선언
@@ -15,6 +16,9 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var mBrushSize : Float? = 0.toFloat()
     private var color = Color.BLACK
     private var canvas : Canvas? = null
+    // ArrayList 안에 추가해서 그려 놓은 상태를 유지시키기 위해 변수를 설정한다. val 로 선언하는 이유는 ArrayList 안에
+    // 데이터는 바뀔 수 있지만 ArrayList 형식 자체가 바뀌지 않기 때문에
+    private val mPaths = ArrayList<CustomPath>()
 
     // 이니셜라이즈 DrawingView 인스턴스가 생성 될 때 초기화되는 값
     init {
@@ -42,6 +46,14 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(mCanvasBitmap!!, 0f, 0f, mCanvasPaint)
+
+        // 배열(mPath) 안에 있는 것들을 for 문을 이용하여 비트맵 이미지로 스크린에 나타낸다
+        for (path in mPaths){
+            mDrawPaint!!.strokeWidth = path.brushThickness!!
+            mDrawPaint!!.color = path.color
+            canvas.drawPath(path, mDrawPaint!!)
+        }
+
         if(!mDrawPath!!.isEmpty){
             mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness!!
             mDrawPaint!!.color = mDrawPath!!.color
@@ -65,11 +77,26 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
                     }
                 }
             }
+            MotionEvent.ACTION_MOVE -> {
+                if (touchX != null) {
+                    if (touchY != null) {
+                        mDrawPath!!.lineTo(touchX,touchY)
+                    }
+                }
+            }
+            //
+            MotionEvent.ACTION_UP -> {
+                // 스크린에서 손을 뗄 때 그 값을 배열(mPath)에 추가하기.
+                mPaths.add(mDrawPath!!)
+                mDrawPath = CustomPath(color, mBrushSize)
+            }
+            else -> return false
 
         }
+        invalidate()
 
 
-        return super.onTouchEvent(event)
+        return true
     }
 
     internal inner class CustomPath(var color: Int, var brushThickness: Float?) : Path() {
