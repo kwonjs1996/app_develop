@@ -7,7 +7,8 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionHelper
-
+// View 클래스를 상속받는 DrawingView 커스텀 클래스를 만든다.
+// View 클래스를 상속받았기 때문에 관련 메소드를 모두 사용 할 수 있다.
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 // 변수 선언
     private var mDrawPath: CustomPath? = null
@@ -20,10 +21,29 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     // ArrayList 안에 추가해서 그려 놓은 상태를 유지시키기 위해 변수를 설정한다. val 로 선언하는 이유는 ArrayList 안에
     // 데이터는 바뀔 수 있지만 ArrayList 형식 자체가 바뀌지 않기 때문에
     private val mPaths = ArrayList<CustomPath>()
+    private val mUndoPath = ArrayList<CustomPath>()
 
     // 이니셜라이즈 DrawingView 인스턴스가 생성 될 때 초기화되는 값
     init {
         setUpDrawing()
+    }
+
+    fun onClickUndo(){
+        if (mPaths.size > 0){
+            mUndoPath.add(mPaths.removeAt(mPaths.size - 1))
+            //View클래스에 정의된 Invalidate() 메서드를 호출하면,
+            //해당 뷰 화면이 무효(invalid)임을 안드로이드에게 알리게 되고,
+            //안드로이드는 현재의 뷰 상태를 반영하여 새로 화면을 그려준다.
+            //View를 상속 받는 커스텀 뷰 클래스를 생성한 다음,
+            //커스텀뷰를 다시 그려야 할 때마다 Invalidate() 메서드를 호출하도록 구현해주면 된다.
+            invalidate()
+        }
+    }
+    fun onClickRedo(){
+        if (mUndoPath.size > 0){
+            mPaths.add(mUndoPath.removeAt(mUndoPath.size - 1))
+            invalidate()
+        }
     }
 
     private fun setUpDrawing(){

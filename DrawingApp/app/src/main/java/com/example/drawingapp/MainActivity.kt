@@ -71,14 +71,23 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.getDrawable(this, R.drawable.pallet_pressed)
         )
 
-        val ib_brush : ImageButton = findViewById(R.id.ib_brush)
-        ib_brush.setOnClickListener {
+        val ibBrush : ImageButton = findViewById(R.id.ib_brush)
+        ibBrush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
-        val btnStoragePermission : ImageButton = findViewById(R.id.ib_storage)
-        btnStoragePermission.setOnClickListener{
+        val ibStorage : ImageButton = findViewById(R.id.ib_storage)
+        ibStorage.setOnClickListener{
             requestStoragePermission()
         }
+        val ibUndo : ImageButton = findViewById(R.id.ib_undo)
+        ibUndo.setOnClickListener {
+            drawingView?.onClickUndo()
+        }
+        val ibRedo : ImageButton = findViewById(R.id.ib_redo)
+        ibRedo.setOnClickListener {
+            drawingView?.onClickRedo()
+        }
+
     }
 
     private fun showBrushSizeChooserDialog(){

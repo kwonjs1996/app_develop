@@ -149,6 +149,21 @@
                 android:id="@+id/ib_storage" />
 
         <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ib_undo_file"
+                android:id="@+id/ib_undo" />
+        <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ib_redo_file"
+                android:id="@+id/ib_redo" />
+
+        <ImageButton
                 android:id="@+id/ib_brush"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
