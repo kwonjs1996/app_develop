@@ -2,14 +2,13 @@ package com.example.drawingapp
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +20,16 @@ class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
+    val openGalleryLauncher : ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+            if(result.resultCode == RESULT_OK && result.data != null){
+                val imageBackGround : ImageView = findViewById(R.id.iv_background)
+                // 데이터 자체를 받아오는 것이 아니라 데이터의 위치를 이용하여 나타낸다.
+                imageBackGround.setImageURI(result.data?.data)
+            }
+        }
+
     private val storageResultLauncher : ActivityResultLauncher<Array<String>> =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -31,6 +40,11 @@ class MainActivity : AppCompatActivity() {
                 if(isGranted){
                     if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE){
                         Toast.makeText(this, "Permission granted for Storage", Toast.LENGTH_SHORT).show()
+                        // intent 를 이용하여 다른 앱으로 넘어갈 수 있다.
+                        // URI 는 기기내의 위치를 뜻함.
+                        val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.
+                        Media.EXTERNAL_CONTENT_URI)
+                        openGalleryLauncher.launch(pickIntent)
                     }
                 }else{
                     if (permissionName != Manifest.permission.READ_EXTERNAL_STORAGE){
