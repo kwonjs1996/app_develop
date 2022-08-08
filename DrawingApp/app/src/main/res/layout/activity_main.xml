@@ -146,7 +146,7 @@
                 android:layout_margin="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ib_file"
-                android:id="@+id/ib_gallery" />
+                android:id="@+id/ib_storage" />
 
         <ImageButton
                 android:id="@+id/ib_brush"
