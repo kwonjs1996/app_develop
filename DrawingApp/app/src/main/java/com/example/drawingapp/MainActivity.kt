@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.MediaScannerConnection
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -244,6 +245,8 @@ class MainActivity : AppCompatActivity() {
                                 this@MainActivity, "File saved successfully :$result",
                                 Toast.LENGTH_LONG
                             ).show()
+                            // 저장한 이미지의 경로가 null 이 아니어야만 공유할 수 있기 때문에 여기에서 실행시킨다.
+                            shareImage(result)
                         } else {
                             Toast.makeText(
                                 this@MainActivity, "SomeThing went wrong while saving the file",
@@ -273,6 +276,18 @@ class MainActivity : AppCompatActivity() {
         if (customProgressDialog != null){
             customProgressDialog?.dismiss()
             customProgressDialog = null
+        }
+    }
+
+    // 저장된 이미지를 공유, 필요한건 파일의 경로(Path)
+    private fun shareImage(result : String){
+        MediaScannerConnection.scanFile(this, arrayOf(result), null){
+            path, uri ->
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.type = "image/png"
+            startActivity(Intent.createChooser(shareIntent, "Share"))
         }
     }
 
