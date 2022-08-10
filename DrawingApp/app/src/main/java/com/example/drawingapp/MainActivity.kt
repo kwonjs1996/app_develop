@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
+    var customProgressDialog : Dialog? = null
     val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
@@ -105,6 +106,8 @@ class MainActivity : AppCompatActivity() {
         val ibSave: ImageButton = findViewById(R.id.ib_save)
         ibSave.setOnClickListener {
             if (isReadStorageAllowed()){
+                // Coroutine 이 실행 되기 전에 Dialog 창을 띄운다.
+                showProgressDialog()
                 lifecycleScope.launch{
                     // 모든 그려진 view (background, draw)를 가지고 있는 FrameLayout 을 가져온다.
                     val flDrawingView : FrameLayout = findViewById(R.id.fl_drawing_view_container)
@@ -234,6 +237,8 @@ class MainActivity : AppCompatActivity() {
                     result = f.absolutePath
 
                     runOnUiThread {
+                        // UI Thread 에서 실행시켜야 한다.
+                        cancelProgressDialog()
                         if (result.isNotEmpty()) {
                             Toast.makeText(
                                 this@MainActivity, "File saved successfully :$result",
@@ -254,5 +259,22 @@ class MainActivity : AppCompatActivity() {
         }
         return result
     }
+
+    // customDialog 생성
+    private fun showProgressDialog(){
+        customProgressDialog = Dialog(this@MainActivity)
+
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progress)
+
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog(){
+        if (customProgressDialog != null){
+            customProgressDialog?.dismiss()
+            customProgressDialog = null
+        }
+    }
+
 
 }
