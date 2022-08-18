@@ -60,6 +60,9 @@ class ExerciseActivity : AppCompatActivity() {
         binding?.tvExerciseName?.visibility = View.INVISIBLE
         binding?.flExerciseView?.visibility = View.INVISIBLE
         binding?.ivImage?.visibility = View.INVISIBLE
+        binding?.tvNextExerciseName?.visibility = View.VISIBLE
+        binding?.tvComming?.visibility = View.VISIBLE
+        binding?.tvNextExerciseName?.text = exerciseList!![currentExercisePosition + 1].getName()
         if (restTimer != null) {
             restTimer?.cancel()
             restProgress = 0
@@ -95,6 +98,8 @@ class ExerciseActivity : AppCompatActivity() {
         binding?.tvExerciseName?.visibility = View.VISIBLE
         binding?.flExerciseView?.visibility = View.VISIBLE
         binding?.ivImage?.visibility = View.VISIBLE
+        binding?.tvNextExerciseName?.visibility = View.INVISIBLE
+        binding?.tvComming?.visibility = View.INVISIBLE
         if (exerciseTimer != null) {
             exerciseTimer?.cancel()
             exerciseProgress = 0

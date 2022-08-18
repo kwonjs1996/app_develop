@@ -72,13 +72,37 @@
         </LinearLayout>
 
     </FrameLayout>
+    <TextView
+        android:id="@+id/tv_comming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPCOMING EXERCISE:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fl_rest_view"
+        android:layout_margin="10dp"
+        android:textStyle="normal"
+        android:visibility="visible"/>
+    <TextView
+        android:id="@+id/tv_next_exercise_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_comming"
+        android:text="Jumping Jacks"
+        android:textStyle="bold"
+        android:textSize="22sp"/>
+
+
+
 
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:src="@drawable/ic_jumping_jacks"
         app:layout_constraintTop_toBottomOf="@+id/toolbarExercise"
         app:layout_constraintBottom_toTopOf="@id/tv_exercise_name"/>
