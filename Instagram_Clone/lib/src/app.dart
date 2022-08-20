@@ -16,7 +16,7 @@ class App extends GetView<BottomNavController> {
           type: BottomNavigationBarType.fixed,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          currentIndex: 0,
+          currentIndex: controller.pageIndex.value,
           elevation: 0,
           onTap: (value) {},
           items: [

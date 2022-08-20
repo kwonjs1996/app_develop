@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
-
+import 'src/binding/init_bindings.dart';
 import 'src/app.dart';
 
 void main() {
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           titleTextStyle: TextStyle(color: Colors.black),
         ),
       ),
+      initialBinding: InitBinding(),
       home: const App(),
     );
   }
