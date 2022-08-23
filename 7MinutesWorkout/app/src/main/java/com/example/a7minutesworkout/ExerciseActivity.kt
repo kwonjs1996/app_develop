@@ -70,9 +70,11 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setupRestView() {
 
         try {
-            val soundURI = Uri.parse(
-                "android.resource://com.example.a7minutesworkout"+R.raw.app_src_main_res_raw_press_start)
-            player = MediaPlayer.create(applicationContext, soundURI)
+            //강의 내에서의 uri parse 를 이용한 방법 => 실행되지 않음
+//            val soundURI = Uri.parse(
+//                "android.resource://com.example.a7minutesworkout"+R.raw.app_src_main_res_raw_press_start)
+            // 구글링으로 찾은 방법 어떤 차이가 있는지 아직 알 수 없음.
+            player = MediaPlayer.create(applicationContext, R.raw.app_src_main_res_raw_press_start)
             player?.isLooping = false
             player?.start()
         }catch (e: Exception){
