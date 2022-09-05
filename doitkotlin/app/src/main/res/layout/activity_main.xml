@@ -25,5 +25,9 @@
         android:text="이지스퍼블리싱 - 웹페이지 : http://easypub.com, 전화번호 : 325-1722,
 이메일 : easy@easy.co.kr" android:autoLink="all"/>
 <!--    autoLink 자동으로 web, email, phone 을 링크로 만들어서 바로 활용 할 수 있게 함.-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/black"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
