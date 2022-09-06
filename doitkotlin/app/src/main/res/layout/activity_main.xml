@@ -4,30 +4,69 @@
 안드로이드 기기의 종류가 많고 그에 따라 화면의 크기도 각각 다르기 떄문에
 개발자는 호환성을 생각해서 특정 수치보다 상대적인 wrap_content, match_parent 를 사용한다.
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="이지스퍼블리싱 - 웹페이지 : http://easypub.com, 전화번호 : 325-1722,
-이메일 : easy@easy.co.kr" android:autoLink="all"/>
-<!--    autoLink 자동으로 web, email, phone 을 링크로 만들어서 바로 활용 할 수 있게 함.-->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@color/black"/>
+        android:text="Hello World!" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    autoLink 자동으로 web, email, phone 을 링크로 만들어서 바로 활용 할 수 있게 함.-->
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="all"
+        android:text="이지스퍼블리싱 - 웹페이지 : http://easypub.com, 전화번호 : 325-1722,
+이메일 : easy@easy.co.kr"
+        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/iv_black"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:maxHeight="20dp"
+        android:maxWidth="20dp"
+        android:src="@color/black"/>
+<!--    Button 사용자 이벤트 처리-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"/>
+<!--    다중 선택 지원 상호간 영향을 미치지 않음-->
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="check1"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="check2"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="check3"/>
+<!--    RadioButton 을 RadioGroup 으로 묶어서 단일 선택을 위해 사용-->
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="radio1"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="radio2"/>
+    </RadioGroup>
+
+</LinearLayout>
