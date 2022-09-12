@@ -13,10 +13,20 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_hello"
+        android:id="@+id/targetView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+    <Button
+        android:id="@+id/visibleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"/>
+    <Button
+        android:id="@+id/invisibleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"/>
 
     <!--    autoLink 자동으로 web, email, phone 을 링크로 만들어서 바로 활용 할 수 있게 함.-->
     <TextView
@@ -38,10 +48,7 @@
         android:maxWidth="20dp"
         android:src="@color/black"/>
 <!--    Button 사용자 이벤트 처리-->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"/>
+
 <!--    다중 선택 지원 상호간 영향을 미치지 않음-->
     <CheckBox
         android:layout_width="wrap_content"
