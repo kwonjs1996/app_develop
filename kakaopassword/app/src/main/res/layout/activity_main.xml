@@ -54,6 +54,16 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#DD2121"
+        android:text="hello"
+        android:textColor="@color/white"
+        android:gravity="bottom"
+        android:layout_gravity="center_horizontal"/>
+<!--    gravity 는 안의 텍스트 위치를 지정할 때 사용
+        layout_gravity 는 뷰 자체의 위치를 지정 할 때 사용.-->
 
 
 
