@@ -65,6 +65,20 @@
 <!--    gravity 는 안의 텍스트 위치를 지정할 때 사용
         layout_gravity 는 뷰 자체의 위치를 지정 할 때 사용.-->
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello"
+            android:backgroundTint="@color/black"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hi"/>
+    </RelativeLayout>
+
 
 
 
