@@ -26,7 +26,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        Log.d("ggam", "onKeyDown")
+        when(keyCode){
+            KeyEvent.KEYCODE_BACK -> Log.d("ggam", "BACK BUTTON 을 눌렀네요")
+            KeyEvent.KEYCODE_VOLUME_UP -> Log.d("ggam", "KEYCODE_VOLUME_UP 을 눌렀네요")
+            KeyEvent.KEYCODE_VOLUME_DOWN -> Log.d("ggam", "KEYCODE_VOLUME_DOWN 을 눌렀네요")
+        }
+
         return super.onKeyDown(keyCode, event)
     }
 
