@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
+import com.example.event.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -39,4 +42,5 @@ class MainActivity : AppCompatActivity() {
         Log.d("ggam", "onKeyUp")
         return super.onKeyUp(keyCode, event)
     }
+
 }
