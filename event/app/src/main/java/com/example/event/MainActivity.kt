@@ -2,45 +2,29 @@ package com.example.event
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import com.example.event.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    // 뒤로가기 버튼을 누른 시각을 저장하는 속성
+    var initTime = 0L
+    // 멈춘 시각을 저장하는 속성
+    var pauseTime = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-    }
-
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        when (event?.action) {
-            MotionEvent.ACTION_DOWN ->{
-                Log.d("ggam",
-                    "Touch down event x: ${event.x}, ${event.rawX}")
-            }
-            MotionEvent.ACTION_UP -> {
-                Log.d("ggam", "Touch up event")
-            }
-        }
-        return super.onTouchEvent(event)
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        when(keyCode){
-            KeyEvent.KEYCODE_BACK -> Log.d("ggam", "BACK BUTTON 을 눌렀네요")
-            KeyEvent.KEYCODE_VOLUME_UP -> Log.d("ggam", "KEYCODE_VOLUME_UP 을 눌렀네요")
-            KeyEvent.KEYCODE_VOLUME_DOWN -> Log.d("ggam", "KEYCODE_VOLUME_DOWN 을 눌렀네요")
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.startButton.setOnClickListener {
+            binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
+            binding.chronometer.start()
+            // 버튼 표시 여부 조정
+            binding.stopButton.isEnabled = true
+            binding.resetButton.isEnabled = true
+            binding.startButton.isEnabled = false
         }
 
-        return super.onKeyDown(keyCode, event)
     }
-
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        Log.d("ggam", "onKeyUp")
-        return super.onKeyUp(keyCode, event)
-    }
-
 }
