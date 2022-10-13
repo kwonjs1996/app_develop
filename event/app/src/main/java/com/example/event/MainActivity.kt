@@ -25,6 +25,20 @@ class MainActivity : AppCompatActivity() {
             binding.resetButton.isEnabled = true
             binding.startButton.isEnabled = false
         }
+        binding.stopButton.setOnClickListener {
+            pauseTime = binding.chronometer.base - SystemClock.elapsedRealtime()
+            binding.chronometer.stop()
+            binding.stopButton.isEnabled = false
+            binding.resetButton.isEnabled = true
+            binding.startButton.isEnabled = true
+        }
+        binding.resetButton.setOnClickListener {
+            pauseTime = 0L
+            binding.chronometer.stop()
+            binding.stopButton.isEnabled = false
+            binding.resetButton.isEnabled = false
+            binding.startButton.isEnabled = true
+        }
 
     }
 }
